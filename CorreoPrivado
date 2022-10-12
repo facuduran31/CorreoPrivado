@@ -1,0 +1,1072 @@
+| package |
+package := Package name: 'CorreoPrivado'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiA0IEYWDQAGAAAASW1hZ2VTdHJpcHBlcgAAAAASAQAADQAAAENvcnJlb1ByaXZhZG8SAQAA
+EQAAAENvcnJlb1ByaXZhZG8uZXhlmgAAABIBAAANAAAAQ29ycmVvUHJpdmFkbxIBAAAbAAAAQ29y
+cmVvUHJpdmFkb1Nlc3Npb25NYW5hZ2Vy778lAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA').
+
+package classNames
+	add: #Carta;
+	add: #CartaDialog;
+	add: #CorreoPrivado;
+	add: #CorreoPrivadoSessionManager;
+	add: #CorreoShell;
+	add: #Destinatario;
+	add: #DestinatarioDialog;
+	add: #DestinatarioShell;
+	add: #Destino;
+	add: #DestinoDialog;
+	add: #DestinoShell;
+	add: #Encomienda;
+	add: #EncomiendaDialog;
+	add: #Envio;
+	add: #EnvioDialog;
+	add: #EnvioShell;
+	add: #PrompterFecha;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\Base\Dolphin'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\Base\Dolphin Message Box'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'D:\facun\Documents\Dolphin Smalltalk 7\Core\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #CorreoPrivado
+	instanceVariableNames: 'envios destinatarios destinos'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #Destinatario
+	instanceVariableNames: 'nombre direccion'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #Destino
+	instanceVariableNames: 'localidad codigoPostal pais importe'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #Envio
+	instanceVariableNames: 'fechaEnvio numeroEnvio destinatario destino importeFinal'
+	classVariableNames: 'NumeroEnvio'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Envio subclass: #Carta
+	instanceVariableNames: 'tipoCarta'
+	classVariableNames: 'Incremento'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Envio subclass: #Encomienda
+	instanceVariableNames: 'peso'
+	classVariableNames: 'PesoMaximo'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #CorreoShell
+	instanceVariableNames: 'correoPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #DestinatarioShell
+	instanceVariableNames: 'destinatariosPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #DestinoShell
+	instanceVariableNames: 'destinosPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Shell subclass: #EnvioShell
+	instanceVariableNames: 'enviosPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #DestinatarioDialog
+	instanceVariableNames: 'nombrePresenter direccionPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #DestinoDialog
+	instanceVariableNames: 'localidadPresenter codigoPostalPresenter paisPresenter importePresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #EnvioDialog
+	instanceVariableNames: 'destinatariosPresenter destinatarioPresenter destinosPresenter destinoPresenter'
+	classVariableNames: 'Destinatarios Destinos'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #PrompterFecha
+	instanceVariableNames: 'fechaPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EnvioDialog subclass: #CartaDialog
+	instanceVariableNames: 'tiposCartaPresenter tipoCartaPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+EnvioDialog subclass: #EncomiendaDialog
+	instanceVariableNames: 'pesoPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RuntimeSessionManager subclass: #CorreoPrivadoSessionManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
+"Source Globals"!
+
+"Classes"!
+
+CorreoPrivado guid: (GUID fromString: '{c286c884-75f2-4666-8846-906707609d39}')!
+CorreoPrivado comment: ''!
+!CorreoPrivado categoriesForClass!Kernel-Objects! !
+!CorreoPrivado methodsFor!
+
+agregarDestinatario: unDestinatario
+
+destinatarios add: unDestinatario.!
+
+agregarDestino: unDestino
+
+destinos add: unDestino.!
+
+agregarEnvio: unEnvio
+
+envios add: unEnvio.!
+
+destinatarios
+
+^destinatarios.!
+
+destinos
+
+^destinos.
+
+!
+
+envios
+
+^envios.!
+
+inicializar
+
+	envios := OrderedCollection new.
+	destinatarios := OrderedCollection new.
+	destinos := OrderedCollection new.! !
+!CorreoPrivado categoriesForMethods!
+agregarDestinatario:!public! !
+agregarDestino:!public! !
+agregarEnvio:!public! !
+destinatarios!public! !
+destinos!public! !
+envios!public! !
+inicializar!public! !
+!
+
+Destinatario guid: (GUID fromString: '{b6300615-19a5-4021-b8bd-894731b801ad}')!
+Destinatario comment: ''!
+!Destinatario categoriesForClass!Kernel-Objects! !
+!Destinatario methodsFor!
+
+direccion
+
+^direccion.!
+
+direccion: aDireccion
+
+direccion := aDireccion.!
+
+displayOn: aStream
+
+aStream nextPutAll: 'Destinatario: ', nombre printString.!
+
+nombre
+
+^nombre.!
+
+nombre: aNombre
+
+	nombre := aNombre.
+! !
+!Destinatario categoriesForMethods!
+direccion!public! !
+direccion:!public! !
+displayOn:!public! !
+nombre!public! !
+nombre:!public! !
+!
+
+Destino guid: (GUID fromString: '{a0c06585-e4c6-4321-8370-c8f274f27321}')!
+Destino comment: ''!
+!Destino categoriesForClass!Kernel-Objects! !
+!Destino methodsFor!
+
+codigoPostal
+
+^codigoPostal.!
+
+codigoPostal: unCodigoPostal
+
+codigoPostal := unCodigoPostal.!
+
+displayOn: aStream
+
+aStream nextPutAll: 'Destino: ', localidad printString.!
+
+importe
+
+^importe.!
+
+importe: unImporte
+
+importe := unImporte.!
+
+localidad
+
+^localidad.!
+
+localidad: unaLocalidad
+
+localidad := unaLocalidad.!
+
+pais
+
+^pais.!
+
+pais: unPais
+
+pais := unPais.! !
+!Destino categoriesForMethods!
+codigoPostal!public! !
+codigoPostal:!public! !
+displayOn:!public! !
+importe!public! !
+importe:!public! !
+localidad!public! !
+localidad:!public! !
+pais!public! !
+pais:!public! !
+!
+
+Envio guid: (GUID fromString: '{1720ea88-f46c-417a-b8fc-25255ea769e0}')!
+Envio comment: ''!
+!Envio categoriesForClass!Kernel-Objects! !
+!Envio methodsFor!
+
+calculaImporteFinal
+
+	importeFinal := destino importe.
+
+^importeFinal.!
+
+destinatario
+
+^destinatario.!
+
+destinatario: unDestinatario
+
+destinatario := unDestinatario.!
+
+destino
+
+^destino.!
+
+destino: unDestino
+
+destino := unDestino.!
+
+displayOn: aStream
+
+aStream nextPutAll: 'Envio a: ', destinatario nombre printString,' Numero de envío: ', numeroEnvio printString, ' Importe: ', importeFinal printString.!
+
+fechaEnvio
+
+^fechaEnvio.!
+
+fechaEnvio: unaFecha
+
+fechaEnvio := unaFecha.!
+
+importeFinal
+
+^importeFinal.!
+
+numeroEnvio
+
+^numeroEnvio.!
+
+numeroEnvio: unNumeroEnvio
+
+numeroEnvio := unNumeroEnvio.! !
+!Envio categoriesForMethods!
+calculaImporteFinal!public! !
+destinatario!public! !
+destinatario:!public! !
+destino!public! !
+destino:!public! !
+displayOn:!public! !
+fechaEnvio!public! !
+fechaEnvio:!public! !
+importeFinal!public! !
+numeroEnvio!public! !
+numeroEnvio:!public! !
+!
+
+!Envio class methodsFor!
+
+NumeroEnvio
+
+^NumeroEnvio.!
+
+NumeroEnvio: unNumero
+
+NumeroEnvio := unNumero.
+! !
+!Envio class categoriesForMethods!
+NumeroEnvio!public! !
+NumeroEnvio:!public! !
+!
+
+Carta guid: (GUID fromString: '{ce17c1c5-067a-4481-8116-6c674f5f0d83}')!
+Carta comment: ''!
+!Carta categoriesForClass!Kernel-Objects! !
+!Carta methodsFor!
+
+calculaImporteFinal
+	tipoCarta = 'Certificada' ifTrue: [  
+		importeFinal := super calculaImporteFinal + Incremento.
+	].
+	tipoCarta = 'Simple' ifTrue: [
+		importeFinal := super calculaImporteFinal.
+	].
+
+^importeFinal.!
+
+tipoCarta
+
+^tipoCarta.!
+
+tipoCarta: unTipoCarta
+
+tipoCarta := unTipoCarta.! !
+!Carta categoriesForMethods!
+calculaImporteFinal!public! !
+tipoCarta!public! !
+tipoCarta:!public! !
+!
+
+!Carta class methodsFor!
+
+incremento
+
+^Incremento.!
+
+incremento: unIncremento
+
+Incremento := unIncremento.! !
+!Carta class categoriesForMethods!
+incremento!public! !
+incremento:!public! !
+!
+
+Encomienda guid: (GUID fromString: '{fb74274e-8222-4430-81d2-e432d85219bc}')!
+Encomienda comment: ''!
+!Encomienda categoriesForClass!Kernel-Objects! !
+!Encomienda methodsFor!
+
+calculaImporteFinal
+
+	|incremento|
+	
+	"Hasta 1 kilo, se aplica 2%."
+	peso <= 1 ifTrue: [
+		incremento := 0.02*super calculaImporteFinal.
+		importeFinal := super calculaImporteFinal+incremento.
+	].
+	"Más de 1 kilo y hasta 5 kilos, se aplica 5%."
+	peso > 1 & (peso <= 5) ifTrue: [
+		incremento := 0.05*super calculaImporteFinal.
+		importeFinal :=super calculaImporteFinal+incremento.
+	].
+	"Más de 5 kilos y hasta 10 kilos, se aplica 7%."
+	peso > 5 & (peso <= 10) ifTrue: [
+		incremento := 0.07*super calculaImporteFinal.
+		importeFinal := super calculaImporteFinal+incremento.
+	].
+	"Más de 10 kilos y hasta 15 kilos, se aplica 10%."
+	peso > 10 & (peso <= 15) ifTrue: [
+		incremento := 0.1*super calculaImporteFinal.
+		importeFinal := super calculaImporteFinal+incremento.
+	].
+^importeFinal.!
+
+peso
+
+^peso.!
+
+peso: unPeso
+
+peso := unPeso.! !
+!Encomienda categoriesForMethods!
+calculaImporteFinal!public! !
+peso!public! !
+peso:!public! !
+!
+
+!Encomienda class methodsFor!
+
+PesoMaximo
+
+^PesoMaximo.!
+
+PesoMaximo: aPesoMaximo
+
+PesoMaximo := aPesoMaximo.! !
+!Encomienda class categoriesForMethods!
+PesoMaximo!public! !
+PesoMaximo:!public! !
+!
+
+CorreoShell guid: (GUID fromString: '{e70fcbc3-56e6-429d-98b1-67b5625114fc}')!
+CorreoShell comment: ''!
+!CorreoShell categoriesForClass!MVP-Presenters! !
+!CorreoShell methodsFor!
+
+inspeccionar
+
+self model inspect.!
+
+nuevoDestinatario
+
+DestinatarioShell showOn: self model.!
+
+nuevoDestino
+
+DestinoShell showOn: self model.!
+
+nuevoEnvio
+
+EnvioShell showOn: self model.! !
+!CorreoShell categoriesForMethods!
+inspeccionar!public! !
+nuevoDestinatario!public! !
+nuevoDestino!public! !
+nuevoEnvio!public! !
+!
+
+!CorreoShell class methodsFor!
+
+defaultModel
+
+|a|
+
+a:= CorreoPrivado new.
+a inicializar.
+
+^a.!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 677 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil 328198 ##(Smalltalk.Point) 611 501 530 611 501 1 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 530 2719 21 530 611 501 416 642 #text: 34 1 8 'Correo Privado' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 79 5 0 0 10 0 0 0 128 6 0 0 4 1 0 0] 34 4 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 832 nil nil nil 7 nil nil nil 832 nil 8 1907578160 1180998 4 ##(Smalltalk.CommandDescription) #nuevoDestino 8 'Nuevo destino' 1 1 nil nil false nil nil nil 578 138 144 34 3 642 #createAt:extent: 34 2 530 81 61 530 177 129 832 642 #isEnabled: 8 #(false) 832 642 #text: 34 1 8 'Nuevo destino' 832 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 40 0 0 0 30 0 0 0 128 0 0 0 94 0 0 0] 8 #() 530 193 193 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1216 nil nil nil 7 nil nil nil 1216 nil 8 1907578160 914 #nuevoDestinatario 8 'Nuevo destinatario' 1 1 nil nil false nil nil nil 578 138 144 34 3 642 #createAt:extent: 34 2 530 331 61 530 177 129 1216 642 #isEnabled: 8 #(false) 1216 642 #text: 34 1 8 'Nuevo destinatario' 1216 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 165 0 0 0 30 0 0 0 253 0 0 0 94 0 0 0] 8 #() 1200 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1568 nil nil nil 7 nil nil nil 1568 nil 8 1907578160 914 #nuevoEnvio 8 'Nuevo envio' 1 1 nil nil false nil nil nil 578 138 144 34 3 642 #createAt:extent: 34 2 530 81 231 530 177 129 1568 642 #isEnabled: 8 #(false) 1568 642 #text: 34 1 8 'Nuevo envio' 1568 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 40 0 0 0 115 0 0 0 128 0 0 0 179 0 0 0] 8 #() 1200 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1920 nil nil nil 7 nil nil nil 1920 nil 8 1907578160 914 #inspeccionar 8 'Inspeccionar' 1 1 nil nil false nil nil nil 578 138 144 34 3 642 #createAt:extent: 34 2 530 331 231 530 181 121 1920 642 #isEnabled: 8 #(false) 1920 642 #text: 34 1 8 'Inspeccionar' 1920 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 165 0 0 0 115 0 0 0 255 0 0 0 175 0 0 0] 8 #() 1200 nil 29 1200 nil 27 )!
+
+show
+	Envio NumeroEnvio: 1000.
+	Carta incremento: 10.
+	Encomienda PesoMaximo: 15.
+	super show.! !
+!CorreoShell class categoriesForMethods!
+defaultModel!public! !
+resource_Default_view!public!resources-views! !
+show!public! !
+!
+
+DestinatarioShell guid: (GUID fromString: '{1ec48b12-21a1-40cb-81c3-3ab976b2bd11}')!
+DestinatarioShell comment: ''!
+!DestinatarioShell categoriesForClass!MVP-Presenters! !
+!DestinatarioShell methodsFor!
+
+agregarDestinatario
+
+|destinatario|
+
+destinatario := DestinatarioDialog showModal.
+destinatario notNil ifTrue: [
+	[(destinatario nombre isNil | destinatario direccion isNil) & (destinatario nombre = 0) not] whileTrue: [
+		MessageBox notify: 'Por favor rellene todos los campos'.
+		destinatario := DestinatarioDialog showModalOn: destinatario.
+		destinatario isNil ifTrue: [
+			destinatario := Destinatario new. 
+			destinatario nombre: 0.
+		].
+	].
+].
+destinatario isNil ifTrue: [
+	destinatario := Destinatario new. 
+	destinatario nombre: 0.
+].
+destinatario notNil & (destinatario nombre = 0) not ifTrue: [self model agregarDestinatario: destinatario ].
+destinatariosPresenter view refreshContents.!
+
+createComponents
+	super createComponents.
+	destinatariosPresenter := self add: ListPresenter new name: 'destinatarios'.!
+
+createSchematicWiring
+	super createComponents.
+	destinatariosPresenter when: #actionPerformed send: #editarDestinatario to: self.!
+
+editarDestinatario
+
+|destinatario|
+destinatario := destinatariosPresenter selectionOrNil.
+destinatario notNil ifTrue: [ DestinatarioDialog showModalOn: destinatario ].
+destinatariosPresenter view refreshContents.!
+
+model: unCorreoPrivado
+
+	super model: unCorreoPrivado.
+	destinatariosPresenter model: (unCorreoPrivado destinatarios)! !
+!DestinatarioShell categoriesForMethods!
+agregarDestinatario!public! !
+createComponents!public! !
+createSchematicWiring!public! !
+editarDestinatario!public! !
+model:!public! !
+!
+
+!DestinatarioShell class methodsFor!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 nil 170 192 34 2 410 ##(Smalltalk.ListBox) 34 17 nil 416 34 2 8 1412497665 1025 528 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 480 nil 7 nil nil nil 528 nil 8 1956056144 459270 ##(Smalltalk.Message) #displayString 8 #() 8 #() false 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 181 61 882 771 441 528 834 #horizontalExtent: 8 #(0) 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 90 0 0 0 30 0 0 0 219 1 0 0 250 0 0 0] 8 #() 882 193 193 nil 27 8 'destinatarios' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 3839 21 882 1201 801 416 962 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 215 9 0 0 154 1 0 0] 34 2 528 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1216 nil nil nil 7 nil nil nil 1216 nil 8 1956503664 1180998 4 ##(Smalltalk.CommandDescription) #agregarDestinatario 8 'Agregar destinatario' 1 1 nil nil false nil nil nil 770 138 144 34 3 834 #createAt:extent: 34 2 882 411 531 882 301 51 1216 834 #isEnabled: 8 #(false) 1216 834 #text: 34 1 8 'Agregar destinatario' 1216 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 9 1 0 0 99 1 0 0 34 1 0 0] 8 #() 1024 nil 29 1024 nil 27 )! !
+!DestinatarioShell class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+!
+
+DestinoShell guid: (GUID fromString: '{a5132114-2308-491c-99a5-2b52667b30be}')!
+DestinoShell comment: ''!
+!DestinoShell categoriesForClass!MVP-Presenters! !
+!DestinoShell methodsFor!
+
+agregarDestino
+
+|destino|
+destino := DestinoDialog showModal.
+destino notNil ifTrue: [
+	[(destino localidad isNil | destino codigoPostal isNil | destino pais isNil | destino importe isNil) & (destino localidad = 0) not] whileTrue: [
+		MessageBox notify: 'Por favor rellene todos los campos'.
+		destino := DestinoDialog showModalOn: destino.
+		destino isNil ifTrue: [
+			destino:= Destino new. 
+			destino localidad: 0.
+		].
+	].
+].
+destino isNil ifTrue: [
+	destino:= Destino new. 
+	destino localidad: 0.
+].
+destino notNil & (destino localidad = 0) not ifTrue: [self model agregarDestino: destino ].
+destinosPresenter view refreshContents.!
+
+createComponents
+	super createComponents.
+	destinosPresenter := self add: ListPresenter new name: 'destinos'.!
+
+createSchematicWiring
+	super createSchematicWiring.
+	destinosPresenter when: #actionPerformed send: #editarDestino to: self.!
+
+editarDestino
+
+|destino|
+destino := destinosPresenter selectionOrNil.
+destino notNil ifTrue: [ DestinoDialog showModalOn: destino ].
+destinosPresenter view refreshContents.!
+
+model: unCorreoPrivado
+
+	super model: unCorreoPrivado.
+	destinosPresenter model: (unCorreoPrivado destinos).! !
+!DestinoShell categoriesForMethods!
+agregarDestino!public! !
+createComponents!public! !
+createSchematicWiring!public! !
+editarDestino!public! !
+model:!public! !
+!
+
+!DestinoShell class methodsFor!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 nil 170 192 34 2 410 ##(Smalltalk.ListBox) 34 17 nil 416 34 2 8 1412497665 1025 528 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 480 nil 7 nil nil nil 528 nil 8 1907377024 459270 ##(Smalltalk.Message) #displayString 8 #() 8 #() false 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 185 69 882 731 441 528 834 #horizontalExtent: 8 #(0) 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 92 0 0 0 34 0 0 0 201 1 0 0 254 0 0 0] 8 #() 882 193 193 nil 27 8 'destinos' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 2719 21 882 1201 801 416 962 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 79 5 0 0 10 0 0 0 167 7 0 0 154 1 0 0] 34 2 528 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1216 nil nil nil 7 nil nil nil 1216 nil 8 1907578160 1180998 4 ##(Smalltalk.CommandDescription) #agregarDestino 8 'Agregar destino' 1 1 nil nil false nil nil nil 770 138 144 34 2 834 #createAt:extent: 34 2 882 411 551 882 281 51 1216 834 #text: 34 1 8 'Agregar destino' 1216 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 19 1 0 0 89 1 0 0 44 1 0 0] 8 #() 1024 nil 29 1024 nil 27 )! !
+!DestinoShell class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+!
+
+EnvioShell guid: (GUID fromString: '{383e80d6-43ae-4605-b704-d22322eb6e21}')!
+EnvioShell comment: ''!
+!EnvioShell categoriesForClass!MVP-Presenters! !
+!EnvioShell methodsFor!
+
+agregarCarta
+
+|carta|
+
+carta := (CartaDialog destinatarios: self model destinatarios; destinos: self model destinos) showModal.
+carta notNil ifTrue: [
+	[(carta destinatario isNil | carta destino isNil | carta tipoCarta isNil) & (carta destinatario = 0) not] whileTrue: [
+		MessageBox notify: 'Por favor rellene todos los campos'.
+		carta := CartaDialog showModalOn: carta.
+		carta isNil ifTrue: [
+			carta := Carta new. 
+			carta destinatario: 0.
+		].
+	].
+].
+carta isNil ifTrue: [
+	carta := Carta new. 
+	carta destinatario: 0.
+].
+carta notNil & (carta destinatario = 0) not ifTrue: [
+	carta fechaEnvio: Date today.
+	carta calculaImporteFinal.
+	carta numeroEnvio: Envio NumeroEnvio.
+	Envio NumeroEnvio: Envio NumeroEnvio+1.
+	self model agregarEnvio: carta 
+].
+enviosPresenter view refreshContents.!
+
+agregarEncomienda
+
+|encomienda|
+
+encomienda := (EncomiendaDialog destinatarios: self model destinatarios; destinos: self model destinos) showModal.
+[encomienda peso > Encomienda PesoMaximo] whileTrue: [
+	MessageBox notify: 'Error. La encomienda supera los 15kg permitidos para enviar'.
+	encomienda := (EncomiendaDialog destinatarios: self model destinatarios; destinos: self model destinos) showModal.
+].
+
+encomienda notNil ifTrue: [
+	encomienda fechaEnvio: Date today.
+	encomienda numeroEnvio: Envio NumeroEnvio.
+	Envio NumeroEnvio: Envio NumeroEnvio+1.
+	encomienda calculaImporteFinal.
+	self model agregarEnvio: encomienda.
+].
+enviosPresenter view refreshContents.!
+
+buscarEnvios
+
+"2- Listar los envíos del tipo encomienda, registrados en una determinada fecha, que el usuario informará
+por teclado. Dicho listado deberá mostrar el número de envío y el importe, y deberá salir ordenado por
+importe, en forma decreciente. Y al final deberá mostrar también, el total de los importes."
+
+| fechaIngresada encomiendasEncontradas |
+
+encomiendasEncontradas := OrderedCollection new.
+fechaIngresada := PrompterFecha showModal.
+
+encomiendasEncontradas := self model envios select: [:envio | (envio isMemberOf: Encomienda) & (envio fechaEnvio = fechaIngresada) ].
+
+"self model envios do: [ :envio | 
+	envio fechaEnvio = fechaIngresada ifTrue: [
+		(envio isMemberOf: Encomienda) ifTrue: [
+			encomiendasEncontradas add: envio.
+		].
+	].
+]."
+
+enviosPresenter model: (encomiendasEncontradas asSortedCollection: [ :unaEncomienda :otraEncomienda | unaEncomienda importeFinal < otraEncomienda importeFinal ]).
+self view refreshContents.!
+
+createComponents
+	super createComponents.
+	enviosPresenter := self add: ListPresenter new name: 'envios'.!
+
+createSchematicWiring
+	super createSchematicWiring.
+	enviosPresenter when: #actionPerformed send: #editarEnvio to: self.!
+
+editarEnvio
+
+(enviosPresenter selection isMemberOf: Carta) ifTrue: [
+	CartaDialog showModalOn: enviosPresenter selection.
+].
+(enviosPresenter selection isMemberOf: Encomienda) ifTrue: [
+	EncomiendaDialog showModalOn: enviosPresenter selection.
+].!
+
+model: unEnvio
+
+	super model: unEnvio.
+	enviosPresenter model: (self model envios).! !
+!EnvioShell categoriesForMethods!
+agregarCarta!public! !
+agregarEncomienda!public! !
+buscarEnvios!public! !
+createComponents!public! !
+createSchematicWiring!public! !
+editarEnvio!public! !
+model:!public! !
+!
+
+!EnvioShell class methodsFor!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 nil 170 192 34 4 410 ##(Smalltalk.ListBox) 34 17 nil 416 34 2 8 1412497665 1025 528 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 480 nil 7 nil nil nil 528 nil 8 1907377024 459270 ##(Smalltalk.Message) #displayString 8 #() 8 #() false 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 95 89 882 941 451 528 834 #horizontalExtent: 8 #(0) 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 47 0 0 0 44 0 0 0 5 2 0 0 13 1 0 0] 8 #() 882 193 193 nil 27 8 'envios' 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1056 nil nil nil 7 nil nil nil 1056 nil 8 1907578160 1180998 4 ##(Smalltalk.CommandDescription) #agregarCarta 8 'Agregar carta' 1 1 nil nil false nil nil nil 770 138 144 34 3 834 #createAt:extent: 34 2 882 181 581 882 311 51 1056 834 #isEnabled: 8 #(false) 1056 834 #text: 34 1 8 'Agregar carta' 1056 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 90 0 0 0 34 1 0 0 245 0 0 0 59 1 0 0] 8 #() 1024 nil 29 8 'Agregar envio' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 138 144 34 2 834 #createAt:extent: 34 2 882 2719 21 882 1201 901 416 834 #text: 34 1 8 'Lista de envios registrados' 416 962 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 79 5 0 0 10 0 0 0 167 7 0 0 204 1 0 0] 34 4 528 1056 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1648 nil nil nil 7 nil nil nil 1648 nil 8 1907578160 1138 #agregarEncomienda 8 'Agregar encomienda' 1 1 nil nil false nil nil nil 770 138 144 34 3 834 #createAt:extent: 34 2 882 651 581 882 311 51 1648 834 #isEnabled: 8 #(false) 1648 834 #text: 34 1 8 'Agregar encomienda' 1648 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 69 1 0 0 34 1 0 0 224 1 0 0 59 1 0 0] 8 #() 1024 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 2000 nil nil nil 7 nil nil nil 2000 nil 8 1907578160 1138 #buscarEnvios 8 'Buscar envios por fecha' 1 1 nil nil false nil nil nil 770 138 144 34 3 834 #createAt:extent: 34 2 882 391 701 882 331 51 2000 834 #isEnabled: 8 #(false) 2000 834 #text: 34 1 8 'Buscar envios por fecha' 2000 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 195 0 0 0 94 1 0 0 104 1 0 0 119 1 0 0] 8 #() 1024 nil 29 1024 nil 27 )! !
+!EnvioShell class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+!
+
+DestinatarioDialog guid: (GUID fromString: '{4da12387-c656-4a59-8530-fdf291cbb3ae}')!
+DestinatarioDialog comment: ''!
+!DestinatarioDialog categoriesForClass!MVP-Presenters! !
+!DestinatarioDialog methodsFor!
+
+createComponents
+	super createComponents.
+	nombrePresenter := self add: TextPresenter new name: 'nombre'.
+	direccionPresenter := self add: TextPresenter new name: 'direccion'.!
+
+model: aDestinatario
+
+	super model: aDestinatario.
+	nombrePresenter model: (aDestinatario aspectValue: #nombre).
+	direccionPresenter model: (aDestinatario aspectValue: #direccion).! !
+!DestinatarioDialog categoriesForMethods!
+createComponents!public! !
+model:!public! !
+!
+
+!DestinatarioDialog class methodsFor!
+
+defaultModel
+
+^Destinatario new.!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 537 738 575 89 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 12 1 0 0 41 1 0 0 56 1 0 0] 8 #() 738 241 241 nil 27 nil nil nil 170 192 34 4 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916352 1025 896 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 896 nil 8 1936169424 852486 ##(Smalltalk.NullConverter) nil nil 1 626 138 144 34 1 690 #createAt:extent: 34 2 738 51 351 738 521 51 896 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 25 0 0 0 175 0 0 0 29 1 0 0 200 0 0 0] 8 #() 848 nil 27 8 'direccion' 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916352 1025 1216 nil 976 nil 7 nil nil nil 1216 nil 8 1936169424 1010 nil nil 1 626 138 144 34 1 690 #createAt:extent: 34 2 738 53 155 738 521 51 1216 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 26 0 0 0 77 0 0 0 30 1 0 0 102 0 0 0] 8 #() 848 nil 27 8 'nombre' 590342 ##(Smalltalk.Rectangle) 738 21 21 738 21 21 nil nil nil nil 10533 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2009350400 626 138 144 34 1 690 #createAt:extent: 34 2 738 2303 21 738 651 739 416 786 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 4 0 0 10 0 0 0 196 5 0 0 123 1 0 0] 34 5 528 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 1760 nil nil nil 7 nil nil nil 1760 nil 8 1936242889 1010 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 41 61 738 301 49 1760 690 #text: 34 1 8 'Nombre:' 1760 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 30 0 0 0 170 0 0 0 54 0 0 0] 8 #() 848 nil 27 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2064 nil nil nil 7 nil nil nil 2064 nil 8 1936242889 1010 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 51 271 738 301 49 2064 690 #text: 34 1 8 'Direccion:' 2064 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 25 0 0 0 135 0 0 0 175 0 0 0 159 0 0 0] 8 #() 848 nil 27 1216 896 848 nil 27 )! !
+!DestinatarioDialog class categoriesForMethods!
+defaultModel!public! !
+resource_Default_view!public!resources-views! !
+!
+
+DestinoDialog guid: (GUID fromString: '{038a21ed-3ea0-41cf-8dab-923305b43734}')!
+DestinoDialog comment: ''!
+!DestinoDialog categoriesForClass!MVP-Presenters! !
+!DestinoDialog methodsFor!
+
+createComponents
+
+	super createComponents.
+	localidadPresenter := self add: TextPresenter new name: 'localidad'.
+	codigoPostalPresenter := self add: NumberPresenter new name: 'codigoPostal'.
+	paisPresenter := self add: TextPresenter new name: 'pais'.
+	importePresenter :=  self add: NumberPresenter new name: 'importe'.
+	!
+
+model: unDestino
+
+	super model: unDestino.
+	localidadPresenter model: (unDestino aspectValue: #localidad).
+	codigoPostalPresenter model: (unDestino aspectValue: #codigoPostal).
+	paisPresenter model: (unDestino aspectValue: #pais).
+	importePresenter model: (unDestino aspectValue: #importe).! !
+!DestinoDialog categoriesForMethods!
+createComponents!public! !
+model:!public! !
+!
+
+!DestinoDialog class methodsFor!
+
+defaultModel
+
+^Destino new.!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 709 738 645 89 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 98 1 0 0 76 1 0 0 142 1 0 0] 8 #() 738 241 241 nil 27 nil nil nil 170 192 34 8 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140924416 1025 896 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 896 nil 8 1936169424 852742 ##(Smalltalk.IntegerToText) nil 8 '' nil 1 626 138 144 34 1 690 #createAt:extent: 34 2 738 41 581 738 611 51 896 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 34 1 0 0 69 1 0 0 59 1 0 0] 8 #() 848 nil 27 8 'importe' 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140924416 1025 1232 nil 976 nil 7 nil nil nil 1232 nil 8 1936169424 1010 nil 1040 nil 1 626 138 144 34 1 690 #createAt:extent: 34 2 738 41 301 738 611 51 1232 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 150 0 0 0 69 1 0 0 175 0 0 0] 8 #() 848 nil 27 8 'codigoPostal' 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916352 1025 1504 nil 976 nil 7 nil nil nil 1504 nil 8 1936169424 852486 ##(Smalltalk.NullConverter) nil nil 1 626 138 144 34 1 690 #createAt:extent: 34 2 738 43 445 738 611 51 1504 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 21 0 0 0 222 0 0 0 70 1 0 0 247 0 0 0] 8 #() 848 nil 27 8 'pais' 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916352 1025 1792 nil 976 nil 7 nil nil nil 1792 nil 8 1936169424 1586 nil nil 1 626 138 144 34 1 690 #createAt:extent: 34 2 738 43 155 738 611 51 1792 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 21 0 0 0 77 0 0 0 70 1 0 0 102 0 0 0] 8 #() 848 nil 27 8 'localidad' 590342 ##(Smalltalk.Rectangle) 738 21 21 738 21 21 nil nil nil nil 9767 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2009350400 626 138 144 34 2 690 #createAt:extent: 34 2 738 2303 21 738 721 911 416 690 #text: 34 1 8 'Crear un nuevo destino' 416 786 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 4 0 0 10 0 0 0 231 5 0 0 209 1 0 0] 34 9 528 1792 1232 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2384 nil nil nil 7 nil nil nil 2384 nil 8 1936242889 1586 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 41 81 738 301 49 2384 690 #text: 34 1 8 'Localidad:' 2384 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 40 0 0 0 170 0 0 0 64 0 0 0] 8 #() 848 nil 27 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2688 nil nil nil 7 nil nil nil 2688 nil 8 1936242889 1586 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 41 231 738 301 49 2688 690 #text: 34 1 8 'Codigo postal:' 2688 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 115 0 0 0 170 0 0 0 139 0 0 0] 8 #() 848 nil 27 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2992 nil nil nil 7 nil nil nil 2992 nil 8 1936242889 1586 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 41 391 738 301 49 2992 690 #text: 34 1 8 'Pais:' 2992 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 195 0 0 0 170 0 0 0 219 0 0 0] 8 #() 848 nil 27 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 3296 nil nil nil 7 nil nil nil 3296 nil 8 1936242889 1586 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 41 511 738 301 49 3296 690 #text: 34 1 8 'Importe:' 3296 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 255 0 0 0 170 0 0 0 23 1 0 0] 8 #() 848 nil 27 1504 896 848 nil 27 )! !
+!DestinoDialog class categoriesForMethods!
+defaultModel!public! !
+resource_Default_view!public!resources-views! !
+!
+
+EnvioDialog guid: (GUID fromString: '{7982ea20-8c06-469e-b730-c376239edb26}')!
+EnvioDialog comment: ''!
+!EnvioDialog categoriesForClass!MVP-Presenters! !
+!EnvioDialog methodsFor!
+
+createComponents
+	super createComponents.
+	destinatariosPresenter := self add: ListPresenter new name: 'destinatarios'.
+	destinatarioPresenter := self add: TextPresenter new name: 'destinatario'.
+	destinosPresenter := self add: ListPresenter new name: 'destinos'.
+	destinoPresenter := self add: TextPresenter new name: 'destino'.
+
+	!
+
+model: unEnvio
+	super model: unEnvio.
+	destinatariosPresenter model: Destinatarios.
+	destinatarioPresenter model: (unEnvio aspectValue: #destinatario).
+	destinosPresenter model: Destinos.
+	destinoPresenter model: (unEnvio aspectValue: #destino).!
+
+ok
+
+	super ok.
+	destinatarioPresenter value: destinatariosPresenter selection.
+	destinoPresenter value: destinosPresenter selection.! !
+!EnvioDialog categoriesForMethods!
+createComponents!public! !
+model:!public! !
+ok!public! !
+!
+
+!EnvioDialog class methodsFor!
+
+defaultModel
+
+^Envio new.!
+
+destinatarios: losDestinatarios
+
+	Destinatarios := losDestinatarios.!
+
+destinos: losDestinos
+
+Destinos:= losDestinos.!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 423 738 449 71 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 211 0 0 0 234 0 0 0 246 0 0 0] 8 #() 738 193 193 nil 27 nil nil nil 170 192 34 2 410 ##(Smalltalk.ComboBox) 34 17 nil 416 34 2 8 1412498946 1025 896 590662 2 ##(Smalltalk.ListModel) 138 144 832 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 896 nil 8 1956062672 459270 ##(Smalltalk.Message) #displayString 8 #() 8 #() 401 626 138 144 34 1 690 #createAt:extent: 34 2 738 125 77 738 251 51 896 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 62 0 0 0 38 0 0 0 187 0 0 0 63 0 0 0] 8 #() 848 nil 27 8 'destinatarios' 590342 ##(Smalltalk.Rectangle) 738 21 21 738 21 21 nil nil nil nil 11153 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2012130352 626 138 144 34 1 690 #createAt:extent: 34 2 738 3839 21 738 521 591 416 786 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 131 8 0 0 49 1 0 0] 34 2 528 896 848 nil 27 )! !
+!EnvioDialog class categoriesForMethods!
+defaultModel!public! !
+destinatarios:!public! !
+destinos:!public! !
+resource_Default_view!public!resources-views! !
+!
+
+PrompterFecha guid: (GUID fromString: '{ecb0c207-7813-4c73-a998-29919f2af11b}')!
+PrompterFecha comment: ''!
+!PrompterFecha categoriesForClass!MVP-Presenters! !
+!PrompterFecha methodsFor!
+
+createComponents
+
+	super createComponents.
+	fechaPresenter := self add: DatePresenter new name: 'fecha'.!
+
+model: unaFecha
+
+	super model: unaFecha.!
+
+ok
+	self model: fechaPresenter value.
+	super ok.! !
+!PrompterFecha categoriesForMethods!
+createComponents!public! !
+model:!public! !
+ok!public! !
+!
+
+!PrompterFecha class methodsFor!
+
+defaultModel
+
+^Date new.!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 223 738 709 71 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 111 0 0 0 108 1 0 0 146 0 0 0] 8 #() 738 193 193 nil 27 nil nil nil 170 192 34 2 410 ##(Smalltalk.DateTimePicker) 34 16 nil 416 34 2 8 1140916230 1 896 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 1026 #hash 8 #() 262406 ##(Smalltalk.Date) 70769 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 896 nil 8 1908151728 852486 ##(Smalltalk.NullConverter) nil nil nil 626 138 144 34 3 690 #createAt:extent: 34 2 738 65 119 738 591 51 896 690 #text: 34 1 8 'lunes, 17 de noviembre de 1997' 896 690 #range: 34 1 8 #(nil nil) 896 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 32 0 0 0 59 0 0 0 71 1 0 0 84 0 0 0] 8 #() 848 nil 27 8 'fecha' 590342 ##(Smalltalk.Rectangle) 738 21 21 738 21 21 nil nil nil nil 13133 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2003271776 626 138 144 34 2 690 #createAt:extent: 34 2 738 2719 21 738 781 391 416 690 #text: 34 1 8 'Buscar encomiendas por fecha' 416 786 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 79 5 0 0 10 0 0 0 213 6 0 0 205 0 0 0] 34 3 528 896 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 1808 nil nil nil 7 nil nil nil 1808 nil 8 1907426384 1186 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 61 71 738 611 41 1808 690 #text: 34 1 8 'Ingrese la fecha en la que se envió la encomienda:' 1808 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 30 0 0 0 35 0 0 0 79 1 0 0 55 0 0 0] 8 #() 848 nil 27 848 nil 27 )! !
+!PrompterFecha class categoriesForMethods!
+defaultModel!public! !
+resource_Default_view!public!resources-views! !
+!
+
+CartaDialog guid: (GUID fromString: '{ae1b2323-ccc0-4d2e-85c6-f880434ff2f5}')!
+CartaDialog comment: ''!
+!CartaDialog categoriesForClass!MVP-Presenters! !
+!CartaDialog methodsFor!
+
+createComponents
+	super createComponents.
+	tiposCartaPresenter := self add: ListPresenter new name: 'tiposCarta'.
+	tipoCartaPresenter := self add: TextPresenter new name: 'tipoCarta'.!
+
+model: unaCarta
+	| tipos |
+	super model: unaCarta.
+	tipos := OrderedCollection new.
+	tipos add: 'Simple'; add: 'Certificada'.
+	tiposCartaPresenter model: tipos.
+	tipoCartaPresenter model: (unaCarta aspectValue: #tipoCarta).!
+
+ok
+
+	tipoCartaPresenter value: tiposCartaPresenter selection.
+	super ok.! !
+!CartaDialog categoriesForMethods!
+createComponents!public! !
+model:!public! !
+ok!public! !
+!
+
+!CartaDialog class methodsFor!
+
+defaultModel
+
+^Carta new.!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 503 738 669 71 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 251 0 0 0 88 1 0 0 30 1 0 0] 8 #() 738 193 193 nil 27 nil nil nil 170 192 34 6 410 ##(Smalltalk.ComboBox) 34 17 nil 416 34 2 8 1412498947 1025 896 590662 2 ##(Smalltalk.ListModel) 138 144 832 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 896 nil 8 1907369952 459270 ##(Smalltalk.Message) #displayString 8 #() 8 #() 401 626 138 144 34 1 690 #createAt:extent: 34 2 738 91 119 738 531 51 896 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 59 0 0 0 54 1 0 0 84 0 0 0] 8 #() 848 nil 27 8 'destinatarios' 410 ##(Smalltalk.ComboBox) 34 17 nil 416 34 2 8 1412498947 1025 1328 962 138 144 832 nil 1024 1056 nil 7 nil nil nil 1328 nil 8 1907369952 1090 #displayString 1120 1136 401 626 138 144 34 1 690 #createAt:extent: 34 2 738 91 391 738 531 51 1328 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 195 0 0 0 54 1 0 0 220 0 0 0] 8 #() 848 nil 27 8 'tiposCarta' 410 ##(Smalltalk.ComboBox) 34 17 nil 416 34 2 8 1412498947 1025 1632 962 138 144 832 nil 1024 1056 nil 7 nil nil nil 1632 nil 8 1907369952 1090 #displayString 1120 1136 401 626 138 144 34 1 690 #createAt:extent: 34 2 738 91 261 738 531 51 1632 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 130 0 0 0 54 1 0 0 155 0 0 0] 8 #() 848 nil 27 8 'destinos' 590342 ##(Smalltalk.Rectangle) 738 21 21 738 21 21 nil nil nil nil 9427 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2003271776 626 138 144 34 2 690 #createAt:extent: 34 2 738 2719 21 738 741 671 416 690 #text: 34 1 8 'Registrar el envío de una nueva carta' 416 786 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 79 5 0 0 10 0 0 0 193 6 0 0 89 1 0 0] 34 7 528 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2256 nil nil nil 7 nil nil nil 2256 nil 8 1907426384 852486 ##(Smalltalk.NullConverter) nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 91 71 738 241 39 2256 690 #text: 34 1 8 'Destinatario:' 2256 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 35 0 0 0 165 0 0 0 54 0 0 0] 8 #() 848 nil 27 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2576 nil nil nil 7 nil nil nil 2576 nil 8 1907426384 2338 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 91 201 738 241 39 2576 690 #text: 34 1 8 'Destino:' 2576 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 100 0 0 0 165 0 0 0 119 0 0 0] 8 #() 848 nil 27 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2880 nil nil nil 7 nil nil nil 2880 nil 8 1907426384 2338 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 91 331 738 241 39 2880 690 #text: 34 1 8 'Tipo de carta:' 2880 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 165 0 0 0 165 0 0 0 184 0 0 0] 8 #() 848 nil 27 896 1632 1328 848 nil 27 )! !
+!CartaDialog class categoriesForMethods!
+defaultModel!public! !
+resource_Default_view!public!resources-views! !
+!
+
+EncomiendaDialog guid: (GUID fromString: '{4e9ae14c-154e-4545-bd49-b6fd24ac61de}')!
+EncomiendaDialog comment: ''!
+!EncomiendaDialog categoriesForClass!MVP-Presenters! !
+!EncomiendaDialog methodsFor!
+
+createComponents
+	super createComponents.
+	pesoPresenter := self add: NumberPresenter new name: 'peso'.
+	!
+
+model: unaEncomienda
+
+	super model: unaEncomienda.
+	pesoPresenter model: (unaEncomienda aspectValue: #peso).! !
+!EncomiendaDialog categoriesForMethods!
+createComponents!public! !
+model:!public! !
+!
+
+!EncomiendaDialog class methodsFor!
+
+defaultModel
+
+^Encomienda new.!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 513 738 689 71 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 0 1 0 0 98 1 0 0 35 1 0 0] 8 #() 738 193 193 nil 27 nil nil nil 170 192 34 6 410 ##(Smalltalk.ComboBox) 34 17 nil 416 34 2 8 1412498947 1025 896 590662 2 ##(Smalltalk.ListModel) 138 144 832 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 896 nil 8 1907369952 459270 ##(Smalltalk.Message) #displayString 8 #() 8 #() 401 626 138 144 34 1 690 #createAt:extent: 34 2 738 91 121 738 531 51 896 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 60 0 0 0 54 1 0 0 85 0 0 0] 8 #() 848 nil 27 8 'destinatarios' 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140924416 1025 1328 nil 1056 nil 7 nil nil nil 1328 nil 8 1907569968 852742 ##(Smalltalk.IntegerToText) nil 8 '' nil 1 626 138 144 34 1 690 #createAt:extent: 34 2 738 91 419 738 531 51 1328 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 209 0 0 0 54 1 0 0 234 0 0 0] 8 #() 848 nil 27 8 'peso' 410 ##(Smalltalk.ComboBox) 34 17 nil 416 34 2 8 1412498947 1025 1632 962 138 144 832 nil 1024 1056 nil 7 nil nil nil 1632 nil 8 1907369952 1090 #displayString 1120 1136 401 626 138 144 34 1 690 #createAt:extent: 34 2 738 91 271 738 531 51 1632 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 135 0 0 0 54 1 0 0 160 0 0 0] 8 #() 848 nil 27 8 'destinos' 590342 ##(Smalltalk.Rectangle) 738 21 21 738 21 21 nil nil nil nil 8923 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2003271776 626 138 144 34 2 690 #createAt:extent: 34 2 738 2719 21 738 761 681 416 690 #text: 34 1 8 'Registrar nuevo envio de encomienda' 416 786 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 79 5 0 0 10 0 0 0 203 6 0 0 94 1 0 0] 34 7 528 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2256 nil nil nil 7 nil nil nil 2256 nil 8 1907426384 852486 ##(Smalltalk.NullConverter) nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 91 61 738 241 39 2256 690 #text: 34 1 8 'Destinatario:' 2256 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 30 0 0 0 165 0 0 0 49 0 0 0] 8 #() 848 nil 27 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2576 nil nil nil 7 nil nil nil 2576 nil 8 1907426384 2338 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 91 201 738 241 39 2576 690 #text: 34 1 8 'Destino:' 2576 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 100 0 0 0 165 0 0 0 119 0 0 0] 8 #() 848 nil 27 1328 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 65 2880 nil nil nil 7 nil nil nil 2880 nil 8 1907426384 2338 nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 738 91 351 738 241 39 2880 690 #text: 34 1 8 'Peso:' 2880 786 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 45 0 0 0 175 0 0 0 165 0 0 0 194 0 0 0] 8 #() 848 nil 27 896 1632 848 nil 27 )! !
+!EncomiendaDialog class categoriesForMethods!
+defaultModel!public! !
+resource_Default_view!public!resources-views! !
+!
+
+CorreoPrivadoSessionManager guid: (GUID fromString: '{c34097bc-9a68-4669-94e3-773ab6a1d06a}')!
+CorreoPrivadoSessionManager comment: ''!
+!CorreoPrivadoSessionManager categoriesForClass!System-Support! !
+!CorreoPrivadoSessionManager methodsFor!
+
+main
+
+CorreoShell show.! !
+!CorreoPrivadoSessionManager categoriesForMethods!
+main!public! !
+!
+
+"Binary Globals"!
+
